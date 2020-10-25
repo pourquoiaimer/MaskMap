@@ -1,0 +1,377 @@
+@import "reset";
+$color-adult:#73C0D8;
+$color-child:#FFA573;
+$color-none:#A5A5A5;
+
+* {
+    box-sizing: border-box;
+    font-family: "Segoe UI", "微軟正黑體", sans-serif;
+}
+
+.bgad {
+    background-color: $color-adult;
+}
+
+.bgch {
+    background-color: $color-child;
+}
+
+.bgno {
+    background-color: $color-none;
+}
+
+.bg-cover {
+    background-size: cover;
+    background-position: center center;
+}
+
+html,
+body {
+    width: 100%;
+    height: 100vh;
+    font-family: "Microsoft JhengHei", "Segoe UI", "Roboto", "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+}
+
+.loading {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    z-index: 9999;
+    background-color: black;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    .loading-img {
+        height: 300px;
+        width: auto;
+    }
+
+    .loading-text {
+        color: white;
+        font-size: 30px;
+    }
+}
+
+.wrap {
+    position: relative;
+    overflow: hidden;
+    width: 100%;
+    height: 100%;
+}
+
+.dataList {
+    //整個左側部份
+    width: 400px;
+    position: absolute;
+    z-index: 1;
+    height: 100%;
+    transition: all,1s;
+    &.close{
+        transform: translateX(-400px);
+    }
+}
+
+.toggleBtn {
+    position: absolute;
+    top: calc(50%);
+    right: -24px;
+    z-index: 3;
+    color: white;
+    background-color: $color-adult;
+    border-radius: 3px;
+    &.close{
+        transform: rotate(180deg);
+    }
+    span {
+        font-size: 24px;
+        line-height: 50px;
+
+    }
+}
+
+.searchInput {
+    //左側上方輸入地址欄位
+    background-color: $color-adult;
+    padding: 10px;
+    height: 140px;
+}
+
+.dayGroup {
+    //顯示日期和誰可購買部份
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 5px;
+
+    .day {
+        font-size: 29px;
+    }
+
+    .dateCheck {
+        .date {
+            font-size: 14px;
+            line-height: 1.5;
+            text-align: right;
+        }
+        .canBuy {
+            font-size: 8px;
+        }
+        .IDNumber {
+            font-size: 20px;
+            color: yellow;
+        }
+    }
+}
+
+.inputGroup {
+    //輸入及選取地點欄位
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+
+    .city,
+    .town {
+        border-radius: 20px;
+        width: 48%;
+        height: 31px;
+        font-size: 1rem;
+        padding: 0 18px;
+        border: none;
+    }
+
+    .search {
+        width: 100%;
+        position: relative;
+        margin-top: 10px;
+
+        .searchBar {
+            font-size: 0.6rem;
+            border-radius: 20px;
+            width: 100%;
+            height: 31px;
+            padding: 0 18px;
+            border: none;
+        }
+
+        .searchIcon {
+            color: grey;
+            position: absolute;
+            right: 0;
+            padding: 5px;
+            cursor: pointer;
+        }
+
+        .searchIcon:hover {
+            color: $color-adult;
+        }
+    }
+}
+
+.resultList {
+    //搜尋結果呈現欄位
+    width: 100%;
+    height: calc(100% - 140px);
+    overflow-y: auto;
+}
+
+.result {
+    position: relative;
+    width: 100%;
+    height: 200px;
+    border-bottom: 1px solid black;
+    padding: 10px 15px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    font-size: 15px;
+    line-height: 1.2;
+
+    .storeName {
+        font-size: 24px;
+        font-weight: bold;
+    }
+
+    .storeAddress {
+        font-size: 14px;
+    }
+
+    .showMask {
+        display: flex;
+        justify-content: space-around;
+        text-align: center;
+        align-items: center;
+        color: white;
+        font-size: 16px;
+        font-weight: bold;
+        line-height: 1.5;
+
+        .maskAdult,
+        .maskChild {
+            padding: 5px 10px;
+            width: 45%;
+            border-radius: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            @media(max-width:767px) {
+                font-size: 14px;
+            }
+        }
+
+        .maskNumber {
+            font-size: 20px;
+        }
+    }
+
+    .goIcon {
+        position: absolute;
+        right: 30px;
+        top: 10px;
+        font-size: 30px;
+        color: $color-adult;
+        cursor: pointer;
+    }
+}
+
+#map{
+    position: relative;
+    width: calc(100% - 400px);
+    height: 100%;
+    overflow-y: hidden;
+    transform: translateX(400px);
+    transition: all,1s;
+}
+.bigMap{
+    width: 100% !important;
+    transform: translateX(0)!important;
+}
+
+.popupArea {
+    width: 300px;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    font-size: 15px;
+    line-height: 1.2;
+
+    p {
+        margin-top: 8px;
+        margin-bottom: 0;
+    }
+
+    .storeName {
+        font-size: 24px;
+        font-weight: bold;
+    }
+
+    .storeAddress {
+        font-size: 14px;
+    }
+
+    .showMask {
+        display: flex;
+        justify-content: space-around;
+        text-align: center;
+        align-items: center;
+        color: white;
+        font-size: 16px;
+        font-weight: bold;
+        line-height: 1.5;
+        margin-top: 10px;
+
+        .maskAdult,
+        .maskChild {
+            padding: 5px 10px;
+            width: 45%;
+            border-radius: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 14px;
+        }
+
+        .maskNumber {
+            font-size: 18px;
+        }
+    }
+}
+
+.marker-cluster-small {
+    background-color: rgba(181, 226, 140, 0.6);
+}
+
+.marker-cluster-small div {
+    background-color: rgba(110, 204, 57, 0.6);
+}
+
+.marker-cluster-medium {
+    background-color: rgba(241, 211, 87, 0.6);
+}
+
+.marker-cluster-medium div {
+    background-color: rgba(240, 194, 12, 0.6);
+}
+
+.marker-cluster-large {
+    width: 50px;
+    height: 50px;
+    background-color: rgba(253, 156, 115, 0.6);
+}
+
+.marker-cluster-large div {
+    width: 40px;
+    height: 40px;
+    background-color: rgba(241, 128, 23, 0.6);
+}
+
+.marker-cluster {
+    background-clip: padding-box;
+    border-radius: 20px;
+}
+
+.marker-cluster div {
+    width: 30px;
+    height: 30px;
+    margin-left: 5px;
+    margin-top: 5px;
+    text-align: center;
+    border-radius: 15px;
+    font: 12px "Helvetica Neue", Arial, Helvetica, sans-serif;
+}
+
+.marker-cluster span {
+    line-height: 30px;
+}
+
+.mapInfo {
+    position: absolute;
+    border-radius: 10px;
+    right: 5px;
+    bottom: 20px;
+    background-color: rgba(20, 20, 20, 0.808);
+    padding: 10px;
+    color: white;
+    display: flex;
+    flex-direction: column;
+
+    div {
+        display: flex;
+        margin-top: 3px;
+        align-items: center;
+    }
+
+    img {
+        width: 20px;
+        height: auto;
+    }
+
+    p {
+        font-size: 14px;
+        margin-left: 10px;
+    }
+}

@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>maskMap-口罩地圖</title>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
+        integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
+        crossorigin="" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.4.1/MarkerCluster.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.4.1/MarkerCluster.Default.css">
+    <link rel="stylesheet" href="/scss/all.css">
+</head>
+
+<!-- dataList = 左側搜索及結果呈現區 -->
+<!-- map = 右側地圖區 -->
+<!-- searchInput = 左上日期及搜索區 -->
+<!-- resultList = 下方搜索結果呈現區 -->
+
+<body>
+    <div class="wrap">
+        <div class="loading">
+            <img src="images/loading.png" alt="" class="loading-img bg-cover">
+            <p class="loading-text">Loading...</p>
+        </div>
+        <div class="dataList">
+            <a href="#" class="toggleBtn">
+                <span class="material-icons">
+                    keyboard_arrow_left
+                </span>
+            </a>
+            <div class="searchInput">
+                <div class="dayGroup">
+                    <h2 class="day"></h2>
+                    <div class="dateCheck">
+                        <p class="date"></p>
+                        <p class="canBuy"></p>
+                    </div>
+                </div>
+                <div class="inputGroup">
+                    <select name="" class="city">
+                    </select>
+                    <select name="" class="town">
+                    </select>
+                    <div class="search">
+                        <input type="text" class="searchBar" placeholder="搜尋地址或藥局名稱...">
+                        <span class="material-icons searchIcon">
+                            search
+                        </span>
+                    </div>
+
+                </div>
+            </div>
+            <div class="resultList">
+                <div class="result">
+                    <span class="material-icons goIcon" data-y='24.9459283' data-x="121.3766219">
+                        visibility</span>
+                    <h3 class="storeName">香香藥局</h3>
+                    <p class="storeAddress">香香市香香區香香街1號1樓</p>
+                    <p class="storePhone">(02)12345678</p>
+                    <p class="storeOpenTime">口罩販售:周八25:00-28:00直接販售</p>
+                    <div class="showMask">
+                        <div class="maskAdult bgad">
+                            <span>成人口罩</span>
+                            <span class="maskNumber">4444</span>
+                        </div>
+                        <div class="maskChild bgch">
+                            <span>兒童口罩</span>
+                            <span class="maskNumber">1234</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id='map'>
+        </div>
+        <div class="mapInfo">
+            <div>
+                <img src="https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-green.png"
+                    alt="">
+                <p>兩種口罩都有</p>
+            </div>
+            <div>
+                <img src="https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-orange.png"
+                    alt="">
+                <p>只剩兒童口罩了</p>
+            </div>
+            <div>
+                <img src="https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-blue.png"
+                    alt="">
+                <p>只剩成人口罩了</p>
+            </div>
+            <div>
+                <img src="https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-grey.png"
+                    alt="">
+                <p>兩種口罩都沒了</p>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
+        integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
+        crossorigin=""></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.4.1/leaflet.markercluster.js"></script>
+    <script src="js/all.js"></script>
+</body>
+
+</html>
