@@ -411,7 +411,8 @@ function moveView(item, zoomNumber) {
 
 function goIcon(e) {
   //點擊藥局資料框內的眼睛圖案時會自動跳到該藥局並打開popup
-  if (document.body.scrollWidth <= 568) {
+  if (document.body.scrollWidth <= 768) {
+    //當瀏覽的頁面較小時，直接將左側資料欄位收起
     togglelist(e);
   }
 
@@ -419,7 +420,8 @@ function goIcon(e) {
     return;
   }
 
-  ;
+  ; //確認指向的目標是goIcon
+
   console.log(document.body.scrollWidth);
   mymap.setView([e.target.dataset.y, e.target.dataset.x], 18);
   markersOpen(e.target.dataset.y, e.target.dataset.x);

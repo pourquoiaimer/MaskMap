@@ -132,8 +132,8 @@ body {
   position: absolute;
   z-index: 1;
   height: 100%;
-  -webkit-transition: all, 1s;
-  transition: all, 1s;
+  -webkit-transition: all, 0.5s;
+  transition: all, 0.5s;
 }
 
 .dataList.close {
@@ -362,8 +362,8 @@ body {
   overflow-y: hidden;
   -webkit-transform: translateX(400px);
           transform: translateX(400px);
-  -webkit-transition: all, 1s;
-  transition: all, 1s;
+  -webkit-transition: all, 0.5s;
+  transition: all, 0.5s;
 }
 
 @media (max-width: 767px) {

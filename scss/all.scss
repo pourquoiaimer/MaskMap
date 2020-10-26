@@ -68,7 +68,7 @@ body {
     position: absolute;
     z-index: 1;
     height: 100%;
-    transition: all, 1s;
+    transition: all, 0.5s;
 
     &.close {
         transform: translateX(-400px);
@@ -256,7 +256,7 @@ body {
     height: 100%;
     overflow-y: hidden;
     transform: translateX(400px);
-    transition: all, 1s;
+    transition: all, 0.5s;
 
     @media(max-width:767px) {
         width: calc(100% - 300px);
