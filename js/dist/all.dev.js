@@ -325,10 +325,8 @@ L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
   //設定地圖的圖資來源
   attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
 }).addTo(mymap);
-var markers = new L.MarkerClusterGroup({
-  //運用此插件達到能夠將多個相近圖標聚集成單一的簇集，減少讀取時的負荷
-  disableClusteringAtZoom: 18 //設置當zoom到達18的時候，所有簇集都會打開
-
+var markers = new L.MarkerClusterGroup({//運用此插件達到能夠將多個相近圖標聚集成單一的簇集，減少讀取時的負荷
+  // disableClusteringAtZoom:18  //設置當zoom到達18的時候，所有簇集都會打開
 }).addTo(mymap); //用插件又增加了一個圖層
 
 var greenIcon = new L.Icon({
@@ -401,7 +399,7 @@ function innerStoresIcon() {
     }).bindPopup("<div class=\"popupArea\"><h3 class=\"storeName\">".concat(storesData[i].properties.name, "</h3>\n        <p class=\"storeAddress\">").concat(storesData[i].properties.address, "</p>\n        <p class=\"storePhone\">").concat(storesData[i].properties.phone, "</p>\n        <p class=\"storeOpenTime\">").concat(storesData[i].properties.note, "</p>\n        <div class=\"showMask\">\n            <div class=\"maskAdult bgad\">\n                <span>\u6210\u4EBA\u53E3\u7F69</span>\n                <span class=\"maskNumber\">").concat(storesData[i].properties.mask_adult, "</span>\n            </div>\n            <div class=\"maskChild bgch\">\n                <span>\u5152\u7AE5\u53E3\u7F69</span>\n                <span class=\"maskNumber\">").concat(storesData[i].properties.mask_child, "</span>\n            </div>\n        </div>\n        </div>")));
   }
 
-  mymap.addLayer(markers); //寫入？
+  mymap.addLayer(markers);
 }
 
 function moveView(item, zoomNumber) {

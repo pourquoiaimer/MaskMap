@@ -265,7 +265,7 @@ L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { //設定地�
 }).addTo(mymap);
 
 let markers = new L.MarkerClusterGroup({ //運用此插件達到能夠將多個相近圖標聚集成單一的簇集，減少讀取時的負荷
-    disableClusteringAtZoom:18  //設置當zoom到達18的時候，所有簇集都會打開
+    // disableClusteringAtZoom:18  //設置當zoom到達18的時候，所有簇集都會打開
 }).addTo(mymap); //用插件又增加了一個圖層
 let greenIcon = new L.Icon({ //綠色icon，成人小孩都有的時候
     iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-green.png',
@@ -334,7 +334,7 @@ function innerStoresIcon() { //將所有的資料icon加到地圖上
         </div>
         </div>`));
     }
-    mymap.addLayer(markers); //寫入？
+    mymap.addLayer(markers);
 }
 function moveView(item, zoomNumber) { //主要是在點擊相關地區舌後做移動
     mymap.setView([item[0].geometry.coordinates[1], item[0].geometry.coordinates[0]], zoomNumber);
