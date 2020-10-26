@@ -130,7 +130,7 @@ body {
 .dataList {
   width: 400px;
   position: absolute;
-  z-index: 1;
+  z-index: 2;
   height: 100%;
   -webkit-transition: all, 0.5s;
   transition: all, 0.5s;
@@ -360,24 +360,22 @@ body {
   width: calc(100% - 400px);
   height: 100%;
   overflow-y: hidden;
-  -webkit-transform: translateX(400px);
-          transform: translateX(400px);
+  margin-left: 400px;
   -webkit-transition: all, 0.5s;
   transition: all, 0.5s;
+  z-index: 1;
 }
 
 @media (max-width: 767px) {
   #map {
     width: calc(100% - 300px);
-    -webkit-transform: translateX(300px);
-            transform: translateX(300px);
+    margin-left: 300px;
   }
 }
 
 .bigMap {
   width: 100% !important;
-  -webkit-transform: translateX(0) !important;
-          transform: translateX(0) !important;
+  margin-left: 0 !important;
 }
 
 .popupArea {
