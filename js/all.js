@@ -23,6 +23,11 @@ let nowCity = ""; //現在指向的城市
 let nowTown = ""; //現在指向的區域
 let nowStoresData = []; //選取城市及區域後的資料
 let findWord = /^台/; //用來做地址修正的
+let markers;
+let greenIcon;
+let greyIcon ;
+let blueIcon ;
+let orangeIcon;
 
 //指向位置
 const day = document.querySelector('.day');
@@ -40,7 +45,7 @@ const searchIcon = document.querySelector('.searchIcon');
 
 
 //監聽動作
-city.addEventListener('change', ()=> { //監聽若城市的選擇欄位有改變，則調整地區及下方的藥局資料，地區默認為全部地區
+city.addEventListener('change', () => { //監聽若城市的選擇欄位有改變，則調整地區及下方的藥局資料，地區默認為全部地區
     innerTown();
     innerStores();
 }, false);
@@ -48,7 +53,7 @@ town.addEventListener('change', innerStores, false);  //當地區改變時，重
 resultList.addEventListener('click', goIcon, false);  //主要為了藥局資料欄位中的眼睛圖標，單獨監視.goIcon會只有第一個被監視到，改為通過監控母區域的方式執行
 toggleBtn.addEventListener('click', togglelist, false) //切換左側資料頁面的開合
 searchIcon.addEventListener('click', searchStores, false)  //搜尋欄位中放大鏡按鈕的點選
-searchBar.addEventListener('keypress',  (e)=> {  //增加按下enter時的監聽
+searchBar.addEventListener('keypress', (e) => {  //增加按下enter時的監聽
     if (e.keyCode === 13) {
         searchStores();
     }
@@ -58,7 +63,7 @@ searchBar.addEventListener('keypress',  (e)=> {  //增加按下enter時的監聽
 // 將獲取遠端 API 或本地 JSON 資料的動作封裝成一個 function，方便後續調用
 function getXML(path) {
     // 利用 Promise 確保獲取資料完成。
-    return new Promise((resolve, reject) =>{ 
+    return new Promise((resolve, reject) => {
         const xhr = new XMLHttpRequest();
         xhr.open('GET', path);
         xhr.send();
@@ -73,7 +78,7 @@ function getXML(path) {
     })
 }
 
-Promise.all([getCityData, getStoresData]).then(resultData =>{ //用promise保證最初載入時的資料完整
+Promise.all([getCityData, getStoresData]).then(resultData => { //用promise保證最初載入時的資料完整
     const originalCityData = resultData[0]; //原始城市地區資料
     cityData = fixCityData(originalCityData);//對原始城市地區資料做修正形成後續使用的城市地區資料檔案
     const originalStoresData = resultData[1].features; //原始藥局資料
@@ -83,11 +88,11 @@ Promise.all([getCityData, getStoresData]).then(resultData =>{ //用promise保證
     showDay();      //填入星期幾
     showToday();    //填入今天日期
     judgeNumber();  //判斷身份證末碼並填入可購買狀態
+    buildMap();     //建構地圖
     innerStores();  //將藥局資料按照城市和地區載入，默認會是台北市的全部地區
     innerStoresIcon(); //載入所有圖標的部份
     document.querySelector('.loading').style.display = "none"; //關閉loading完成圖片
 })
-
 
 function fixCityData(item) {  //去掉其中的南海島及釣魚臺
     let len = item.length;
@@ -112,8 +117,8 @@ function fixCityData(item) {  //去掉其中的南海島及釣魚臺
 function fixStoresData(item) { //主要為了修正取回的藥局資料中部份沒有county及town的部份，並統一將地址的第一個字的台改為臺
     let len = item.length;
     for (let i = 0; len > i; i++) { //修正開頭第一個字為台的地址，統一改為臺
-        if((item[i].properties.address).substr(0,1)=="台"){
-            item[i].properties.address=(item[i].properties.address).replace(findWord,"臺");
+        if ((item[i].properties.address).substr(0, 1) == "台") {
+            item[i].properties.address = (item[i].properties.address).replace(findWord, "臺");
         }
     }
     //用address的前三個字補上空的county
@@ -256,53 +261,68 @@ function judgeDay() { //取得今天星期幾 週日會是0，後面可用於身
 }
 
 ////*****關於地圖的函數////
-let mymap = L.map('map', { //設定地圖在哪個標籤呈現
+const mymap = L.map('map', { //設定地圖在哪個標籤呈現
     center: [24.9459283, 121.3766219], //設定起始中心定位點
     zoom: 16 //地圖預設大小倍率
 });
-L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { //設定地圖的圖資來源
-    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-}).addTo(mymap);
 
-let markers = new L.MarkerClusterGroup({ //運用此插件達到能夠將多個相近圖標聚集成單一的簇集，減少讀取時的負荷
-    // disableClusteringAtZoom:18  //設置當zoom到達18的時候，所有簇集都會打開
-}).addTo(mymap); //用插件又增加了一個圖層
-let greenIcon = new L.Icon({ //綠色icon，成人小孩都有的時候
-    iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-green.png',
-    shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
-    iconSize: [25, 41],
-    iconAnchor: [12, 41],
-    popupAnchor: [1, -34],
-    shadowSize: [41, 41]
-});
-let greyIcon = new L.Icon({ //灰色icon，當成人小孩都沒有的時候
-    iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-grey.png',
-    shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
-    iconSize: [25, 41],
-    iconAnchor: [12, 41],
-    popupAnchor: [1, -34],
-    shadowSize: [41, 41]
-});
-let blueIcon = new L.Icon({ //藍色icon，當沒有小孩只剩成人的時候
-    iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-blue.png',
-    shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
-    iconSize: [25, 41],
-    iconAnchor: [12, 41],
-    popupAnchor: [1, -34],
-    shadowSize: [41, 41]
-});
-let orangeIcon = new L.Icon({ //橘色icon，當沒有成人只剩小孩的時候
-    iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-orange.png',
-    shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
-    iconSize: [25, 41],
-    iconAnchor: [12, 41],
-    popupAnchor: [1, -34],
-    shadowSize: [41, 41]
-});
+function buildMap() {
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { //設定地圖的圖資來源
+    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+    }).addTo(mymap);
+
+    markers = new L.MarkerClusterGroup({ //運用此插件達到能夠將多個相近圖標聚集成單一的簇集，減少讀取時的負荷
+        // disableClusteringAtZoom:18  //設置當zoom到達18的時候，所有簇集都會打開
+    }).addTo(mymap); //用插件又增加了一個圖層
+
+    greenIcon = new L.Icon({ //綠色icon，成人小孩都有的時候
+        iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-green.png',
+        shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
+        iconSize: [25, 41],
+        iconAnchor: [12, 41],
+        popupAnchor: [1, -34],
+        shadowSize: [41, 41]
+    });
+    greyIcon = new L.Icon({ //灰色icon，當成人小孩都沒有的時候
+        iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-grey.png',
+        shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
+        iconSize: [25, 41],
+        iconAnchor: [12, 41],
+        popupAnchor: [1, -34],
+        shadowSize: [41, 41]
+    });
+    blueIcon = new L.Icon({ //藍色icon，當沒有小孩只剩成人的時候
+        iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-blue.png',
+        shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
+        iconSize: [25, 41],
+        iconAnchor: [12, 41],
+        popupAnchor: [1, -34],
+        shadowSize: [41, 41]
+    });
+    orangeIcon = new L.Icon({ //橘色icon，當沒有成人只剩小孩的時候
+        iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-orange.png',
+        shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
+        iconSize: [25, 41],
+        iconAnchor: [12, 41],
+        popupAnchor: [1, -34],
+        shadowSize: [41, 41]
+    });
+}
+
+
+
+
+
+
+
+
+
+
+
 function innerStoresIcon() { //將所有的資料icon加到地圖上
     let len = storesData.length //計算長度
     console.log(len);
-    for (let i = 0; len > i; i++) {  //跑迴圈，抓每個資料的裡面的經緯度，在該處加入一個icon並起增加氣泡信息的內容，原本leaflet是在addLayer後面的括弧內的內容，增加markers.addLayer是用插件再增加圖層的聚集，讓網頁不會因為太多icon炸掉，
+    for (let i = 0; len > i; i++) {  //跑迴圈，抓每個資料的裡面的經`緯度，在該處加入一個icon並起增加氣泡信息的內容，原本leaflet是在addLayer後面的括弧內的內容，增加markers.addLayer是用插件再增加圖層的聚集，讓網頁不會因為太多icon炸掉，
         let iconColor;
         switch (true) {
             case (storesData[i].properties.mask_adult == 0 && storesData[i].properties.mask_child == 0):
@@ -340,19 +360,19 @@ function moveView(item, zoomNumber) { //主要是在點擊相關地區舌後做�
     mymap.setView([item[0].geometry.coordinates[1], item[0].geometry.coordinates[0]], zoomNumber);
 }
 function goIcon(e) {  //點擊藥局資料框內的眼睛圖案時會自動跳到該藥局並打開popup
-    if(document.body.scrollWidth<=768){ //當瀏覽的頁面較小時，直接將左側資料欄位收起
+    if (document.body.scrollWidth <= 768) { //當瀏覽的頁面較小時，直接將左側資料欄位收起
         togglelist(e);
     }
     if (!e.target.className.includes('goIcon')) { return };  //確認指向的目標是goIcon
     console.log(document.body.scrollWidth);
 
     mymap.setView([e.target.dataset.y, e.target.dataset.x], 18);
-    markersOpen(e.target.dataset.y, e.target.dataset.x); 
+    markersOpen(e.target.dataset.y, e.target.dataset.x);
 }
 function markersOpen(itemy, itemx) { //在點擊了清單中的眼睛按鈕後，跳轉到該藥局且打開popup
     markers.eachLayer(function (layer) {  //eachLayer是leaflet提供的遍歷所有點的函數
         if (layer._latlng.lat == itemy && layer._latlng.lng == itemx) {  //這邊是讓所有點的經緯度跟被點的做比對，找出相同的那一個
-            markers.zoomToShowLayer((layer),()=>//zoomToshowLayer是MarkerClusterGroup插件提供的方法，將畫面拉到那個點之外還能有callback動作，試過單獨用layer.openPopup()，可能因為zoom過去後還未能在icon展開後再執行openPopup導致一些有相近藥局的資料沒辦法順利打開
+            markers.zoomToShowLayer((layer), () =>//zoomToshowLayer是MarkerClusterGroup插件提供的方法，將畫面拉到那個點之外還能有callback動作，試過單獨用layer.openPopup()，可能因為zoom過去後還未能在icon展開後再執行openPopup導致一些有相近藥局的資料沒辦法順利打開
                 layer.openPopup()
             );
         }
@@ -380,7 +400,7 @@ function searchStores() { //搜尋並匹配資料------看是否切換成只包�
         return
     }
     for (let i = 0; len > i; i++) { //用includes來做搜索的匹配，只要輸入的字包含在地址或藥局名稱都會被找出，在匹配地址部份，增加一個首字臺台不分
-        if (storesData[i].properties.name.includes(searchBar.value) || storesData[i].properties.address.includes(searchBar.value) || storesData[i].properties.address.includes(searchBar.value.replace(findWord,"臺"))) {
+        if (storesData[i].properties.name.includes(searchBar.value) || storesData[i].properties.address.includes(searchBar.value) || storesData[i].properties.address.includes(searchBar.value.replace(findWord, "臺"))) {
             nowStoresData.push(storesData[i]);
         }
     }

@@ -30,7 +30,12 @@ var nowTown = ""; //現在指向的區域
 var nowStoresData = []; //選取城市及區域後的資料
 
 var findWord = /^台/; //用來做地址修正的
-//指向位置
+
+var markers;
+var greenIcon;
+var greyIcon;
+var blueIcon;
+var orangeIcon; //指向位置
 
 var day = document.querySelector('.day');
 var city = document.querySelector('.city');
@@ -104,6 +109,8 @@ Promise.all([getCityData, getStoresData]).then(function (resultData) {
   showToday(); //填入今天日期
 
   judgeNumber(); //判斷身份證末碼並填入可購買狀態
+
+  buildMap(); //建構地圖
 
   innerStores(); //將藥局資料按照城市和地區載入，默認會是台北市的全部地區
 
@@ -321,50 +328,53 @@ var mymap = L.map('map', {
   zoom: 16 //地圖預設大小倍率
 
 });
-L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-  //設定地圖的圖資來源
-  attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-}).addTo(mymap);
-var markers = new L.MarkerClusterGroup({//運用此插件達到能夠將多個相近圖標聚集成單一的簇集，減少讀取時的負荷
-  // disableClusteringAtZoom:18  //設置當zoom到達18的時候，所有簇集都會打開
-}).addTo(mymap); //用插件又增加了一個圖層
 
-var greenIcon = new L.Icon({
-  //綠色icon，成人小孩都有的時候
-  iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-green.png',
-  shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
-  iconSize: [25, 41],
-  iconAnchor: [12, 41],
-  popupAnchor: [1, -34],
-  shadowSize: [41, 41]
-});
-var greyIcon = new L.Icon({
-  //灰色icon，當成人小孩都沒有的時候
-  iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-grey.png',
-  shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
-  iconSize: [25, 41],
-  iconAnchor: [12, 41],
-  popupAnchor: [1, -34],
-  shadowSize: [41, 41]
-});
-var blueIcon = new L.Icon({
-  //藍色icon，當沒有小孩只剩成人的時候
-  iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-blue.png',
-  shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
-  iconSize: [25, 41],
-  iconAnchor: [12, 41],
-  popupAnchor: [1, -34],
-  shadowSize: [41, 41]
-});
-var orangeIcon = new L.Icon({
-  //橘色icon，當沒有成人只剩小孩的時候
-  iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-orange.png',
-  shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
-  iconSize: [25, 41],
-  iconAnchor: [12, 41],
-  popupAnchor: [1, -34],
-  shadowSize: [41, 41]
-});
+function buildMap() {
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    //設定地圖的圖資來源
+    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+  }).addTo(mymap);
+  markers = new L.MarkerClusterGroup({//運用此插件達到能夠將多個相近圖標聚集成單一的簇集，減少讀取時的負荷
+    // disableClusteringAtZoom:18  //設置當zoom到達18的時候，所有簇集都會打開
+  }).addTo(mymap); //用插件又增加了一個圖層
+
+  greenIcon = new L.Icon({
+    //綠色icon，成人小孩都有的時候
+    iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-green.png',
+    shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
+    iconSize: [25, 41],
+    iconAnchor: [12, 41],
+    popupAnchor: [1, -34],
+    shadowSize: [41, 41]
+  });
+  greyIcon = new L.Icon({
+    //灰色icon，當成人小孩都沒有的時候
+    iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-grey.png',
+    shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
+    iconSize: [25, 41],
+    iconAnchor: [12, 41],
+    popupAnchor: [1, -34],
+    shadowSize: [41, 41]
+  });
+  blueIcon = new L.Icon({
+    //藍色icon，當沒有小孩只剩成人的時候
+    iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-blue.png',
+    shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
+    iconSize: [25, 41],
+    iconAnchor: [12, 41],
+    popupAnchor: [1, -34],
+    shadowSize: [41, 41]
+  });
+  orangeIcon = new L.Icon({
+    //橘色icon，當沒有成人只剩小孩的時候
+    iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-orange.png',
+    shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
+    iconSize: [25, 41],
+    iconAnchor: [12, 41],
+    popupAnchor: [1, -34],
+    shadowSize: [41, 41]
+  });
+}
 
 function innerStoresIcon() {
   //將所有的資料icon加到地圖上
@@ -373,7 +383,7 @@ function innerStoresIcon() {
   console.log(len);
 
   for (var i = 0; len > i; i++) {
-    //跑迴圈，抓每個資料的裡面的經緯度，在該處加入一個icon並起增加氣泡信息的內容，原本leaflet是在addLayer後面的括弧內的內容，增加markers.addLayer是用插件再增加圖層的聚集，讓網頁不會因為太多icon炸掉，
+    //跑迴圈，抓每個資料的裡面的經`緯度，在該處加入一個icon並起增加氣泡信息的內容，原本leaflet是在addLayer後面的括弧內的內容，增加markers.addLayer是用插件再增加圖層的聚集，讓網頁不會因為太多icon炸掉，
     var iconColor = void 0;
 
     switch (true) {
