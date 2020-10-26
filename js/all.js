@@ -340,7 +340,12 @@ function moveView(item, zoomNumber) { //主要是在點擊相關地區舌後做�
     mymap.setView([item[0].geometry.coordinates[1], item[0].geometry.coordinates[0]], zoomNumber);
 }
 function goIcon(e) {  //點擊藥局資料框內的眼睛圖案時會自動跳到該藥局並打開popup
+    if(document.body.scrollWidth<=568){
+        togglelist(e);
+    }
     if (!e.target.className.includes('goIcon')) { return }; 
+    console.log(document.body.scrollWidth);
+
     mymap.setView([e.target.dataset.y, e.target.dataset.x], 18);
     markersOpen(e.target.dataset.y, e.target.dataset.x); 
 }

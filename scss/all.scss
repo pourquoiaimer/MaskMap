@@ -228,13 +228,15 @@ body {
             justify-content: space-between;
             align-items: center;
             @media(max-width:767px) {
-                width: 48%;
+                width: 49%;
                 font-size: 14px;
             }
         }
-
         .maskNumber {
             font-size: 20px;
+            @media(max-width:767px) {
+                font-size: 17px;
+            }
         }
     }
 
@@ -374,8 +376,7 @@ body {
     color: white;
     display: flex;
     flex-direction: column;
-
-    @media(max-width:567px) {
+    @media(max-width:480px) {
         display: none;
     }
 
