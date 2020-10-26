@@ -68,27 +68,36 @@ body {
     position: absolute;
     z-index: 1;
     height: 100%;
-    transition: all,1s;
-    &.close{
+    transition: all, 1s;
+
+    &.close {
         transform: translateX(-400px);
+    }
+
+    @media(max-width:767px) {
+        width: 300px;
     }
 }
 
 .toggleBtn {
     position: absolute;
-    top: calc(50%);
+    top: 50%;
     right: -24px;
     z-index: 3;
     color: white;
     background-color: $color-adult;
     border-radius: 3px;
-    &.close{
+    &.close {
         transform: rotate(180deg);
+        right: -24px;
+        @media(max-width:767px){
+            right: -124px;
+        }
     }
+
     span {
         font-size: 24px;
         line-height: 50px;
-
     }
 }
 
@@ -117,9 +126,11 @@ body {
             line-height: 1.5;
             text-align: right;
         }
+
         .canBuy {
             font-size: 8px;
         }
+
         .IDNumber {
             font-size: 20px;
             color: yellow;
@@ -208,7 +219,6 @@ body {
         font-size: 16px;
         font-weight: bold;
         line-height: 1.5;
-
         .maskAdult,
         .maskChild {
             padding: 5px 10px;
@@ -217,8 +227,8 @@ body {
             display: flex;
             justify-content: space-between;
             align-items: center;
-
             @media(max-width:767px) {
+                width: 48%;
                 font-size: 14px;
             }
         }
@@ -238,17 +248,23 @@ body {
     }
 }
 
-#map{
+#map {
     position: relative;
     width: calc(100% - 400px);
     height: 100%;
     overflow-y: hidden;
     transform: translateX(400px);
-    transition: all,1s;
+    transition: all, 1s;
+
+    @media(max-width:767px) {
+        width: calc(100% - 300px);
+        transform: translateX(300px);
+    }
 }
-.bigMap{
+
+.bigMap {
     width: 100% !important;
-    transform: translateX(0)!important;
+    transform: translateX(0) !important;
 }
 
 .popupArea {
@@ -358,6 +374,10 @@ body {
     color: white;
     display: flex;
     flex-direction: column;
+
+    @media(max-width:567px) {
+        display: none;
+    }
 
     div {
         display: flex;

@@ -132,8 +132,8 @@ body {
   position: absolute;
   z-index: 1;
   height: 100%;
-  -webkit-transition: all,1s;
-  transition: all,1s;
+  -webkit-transition: all, 1s;
+  transition: all, 1s;
 }
 
 .dataList.close {
@@ -141,9 +141,15 @@ body {
           transform: translateX(-400px);
 }
 
+@media (max-width: 767px) {
+  .dataList {
+    width: 300px;
+  }
+}
+
 .toggleBtn {
   position: absolute;
-  top: calc(50%);
+  top: 50%;
   right: -24px;
   z-index: 3;
   color: white;
@@ -154,6 +160,13 @@ body {
 .toggleBtn.close {
   -webkit-transform: rotate(180deg);
           transform: rotate(180deg);
+  right: -24px;
+}
+
+@media (max-width: 767px) {
+  .toggleBtn.close {
+    right: -124px;
+  }
 }
 
 .toggleBtn span {
@@ -318,6 +331,7 @@ body {
 @media (max-width: 767px) {
   .result .showMask .maskAdult,
   .result .showMask .maskChild {
+    width: 48%;
     font-size: 14px;
   }
 }
@@ -342,8 +356,16 @@ body {
   overflow-y: hidden;
   -webkit-transform: translateX(400px);
           transform: translateX(400px);
-  -webkit-transition: all,1s;
-  transition: all,1s;
+  -webkit-transition: all, 1s;
+  transition: all, 1s;
+}
+
+@media (max-width: 767px) {
+  #map {
+    width: calc(100% - 300px);
+    -webkit-transform: translateX(300px);
+            transform: translateX(300px);
+  }
 }
 
 .bigMap {
@@ -480,6 +502,12 @@ body {
   -webkit-box-direction: normal;
       -ms-flex-direction: column;
           flex-direction: column;
+}
+
+@media (max-width: 567px) {
+  .mapInfo {
+    display: none;
+  }
 }
 
 .mapInfo div {
