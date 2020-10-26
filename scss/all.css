@@ -137,8 +137,8 @@ body {
 }
 
 .dataList.close {
-  -webkit-transform: translateX(-400px);
-          transform: translateX(-400px);
+  -webkit-transform: translateX(-100%);
+          transform: translateX(-100%);
 }
 
 @media (max-width: 767px) {
@@ -160,13 +160,6 @@ body {
 .toggleBtn.close {
   -webkit-transform: rotate(180deg);
           transform: rotate(180deg);
-  right: -24px;
-}
-
-@media (max-width: 767px) {
-  .toggleBtn.close {
-    right: -124px;
-  }
 }
 
 .toggleBtn span {
@@ -360,7 +353,8 @@ body {
   width: calc(100% - 400px);
   height: 100%;
   overflow-y: hidden;
-  margin-left: 400px;
+  -webkit-transform: translateX(400px);
+          transform: translateX(400px);
   -webkit-transition: all, 0.5s;
   transition: all, 0.5s;
   z-index: 1;
@@ -369,13 +363,15 @@ body {
 @media (max-width: 767px) {
   #map {
     width: calc(100% - 300px);
-    margin-left: 300px;
+    -webkit-transform: translateX(300px);
+            transform: translateX(300px);
   }
 }
 
 .bigMap {
   width: 100% !important;
-  margin-left: 0 !important;
+  -webkit-transform: translateX(0) !important;
+          transform: translateX(0) !important;
 }
 
 .popupArea {

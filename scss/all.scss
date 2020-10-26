@@ -69,11 +69,9 @@ body {
     z-index: 2;
     height: 100%;
     transition: all, 0.5s;
-
     &.close {
-        transform: translateX(-400px);
+        transform: translateX(-100%);
     }
-
     @media(max-width:767px) {
         width: 300px;
     }
@@ -89,12 +87,7 @@ body {
     border-radius: 3px;
     &.close {
         transform: rotate(180deg);
-        right: -24px;
-        @media(max-width:767px){
-            right: -124px;
-        }
     }
-
     span {
         font-size: 24px;
         line-height: 50px;
@@ -255,22 +248,19 @@ body {
     width: calc(100% - 400px);
     height: 100%;
     overflow-y: hidden;
-    // transform: translateX(400px);
-    margin-left: 400px;
+    transform: translateX(400px);
     transition: all, 0.5s;
     z-index: 1;
 
     @media(max-width:767px) {
         width: calc(100% - 300px);
-        // transform: translateX(300px);
-        margin-left: 300px;
+        transform: translateX(300px);
     }
 }
 
 .bigMap {
     width: 100% !important;
-    margin-left: 0 !important;
-    // transform: translateX(0) !important;
+    transform: translateX(0) !important;
 }
 
 .popupArea {
@@ -280,7 +270,6 @@ body {
     flex-direction: column;
     font-size: 15px;
     line-height: 1.2;
-
     p {
         margin-top: 8px;
         margin-bottom: 0;
@@ -294,7 +283,6 @@ body {
     .storeAddress {
         font-size: 14px;
     }
-
     .showMask {
         display: flex;
         justify-content: space-around;

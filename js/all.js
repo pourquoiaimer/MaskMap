@@ -350,10 +350,9 @@ function goIcon(e) {  //點擊藥局資料框內的眼睛圖案時會自動跳�
         toggleBtn.classList.add('close'); //沒有就加上，讓圖案向外
     }
     if (!e.target.className.includes('goIcon')) { return };  //確認指向的目標是goIcon
-    console.log(document.body.scrollWidth);
-
-    mymap.setView([e.target.dataset.y, e.target.dataset.x], 18);
     markersOpen(e.target.dataset.y, e.target.dataset.x);
+    mymap.setView([e.target.dataset.y, e.target.dataset.x], 18);
+
 }
 function markersOpen(itemy, itemx) { //在點擊了清單中的眼睛按鈕後，跳轉到該藥局且打開popup
     markers.eachLayer(function (layer) {  //eachLayer是leaflet提供的遍歷所有點的函數

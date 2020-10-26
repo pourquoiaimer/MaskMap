@@ -432,9 +432,8 @@ function goIcon(e) {
 
   ; //確認指向的目標是goIcon
 
-  console.log(document.body.scrollWidth);
-  mymap.setView([e.target.dataset.y, e.target.dataset.x], 18);
   markersOpen(e.target.dataset.y, e.target.dataset.x);
+  mymap.setView([e.target.dataset.y, e.target.dataset.x], 18);
 }
 
 function markersOpen(itemy, itemx) {
