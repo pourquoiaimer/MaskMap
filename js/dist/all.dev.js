@@ -30,12 +30,53 @@ var nowTown = ""; //現在指向的區域
 var nowStoresData = []; //選取城市及區域後的資料
 
 var findWord = /^台/; //用來做地址修正的
+//定義關於地圖的資料
 
-var markers;
-var greenIcon;
-var greyIcon;
-var blueIcon;
-var orangeIcon; //指向位置
+var mymap = L.map('map', {
+  //設定地圖在哪個標籤呈現
+  center: [24.9459283, 121.3766219],
+  //設定起始中心定位點
+  zoom: 16 //地圖預設大小倍率
+
+});
+var greenIcon = new L.Icon({
+  //綠色icon，成人小孩都有的時候
+  iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-green.png',
+  shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
+  iconSize: [25, 41],
+  iconAnchor: [12, 41],
+  popupAnchor: [1, -34],
+  shadowSize: [41, 41]
+});
+var greyIcon = new L.Icon({
+  //灰色icon，當成人小孩都沒有的時候
+  iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-grey.png',
+  shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
+  iconSize: [25, 41],
+  iconAnchor: [12, 41],
+  popupAnchor: [1, -34],
+  shadowSize: [41, 41]
+});
+var blueIcon = new L.Icon({
+  //藍色icon，當沒有小孩只剩成人的時候
+  iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-blue.png',
+  shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
+  iconSize: [25, 41],
+  iconAnchor: [12, 41],
+  popupAnchor: [1, -34],
+  shadowSize: [41, 41]
+});
+var orangeIcon = new L.Icon({
+  //橘色icon，當沒有成人只剩小孩的時候
+  iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-orange.png',
+  shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
+  iconSize: [25, 41],
+  iconAnchor: [12, 41],
+  popupAnchor: [1, -34],
+  shadowSize: [41, 41]
+});
+var markers; //預先定義
+//指向位置
 
 var day = document.querySelector('.day');
 var city = document.querySelector('.city');
@@ -318,62 +359,19 @@ function judgeDay() {
   //取得今天星期幾 週日會是0，後面可用於身份證末碼判斷
   var day = new Date().getDay();
   return day;
-} ////*****關於地圖的函數////
+} ////*****關於地圖的fuction////
 
-
-var mymap = L.map('map', {
-  //設定地圖在哪個標籤呈現
-  center: [24.9459283, 121.3766219],
-  //設定起始中心定位點
-  zoom: 16 //地圖預設大小倍率
-
-});
 
 function buildMap() {
   L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     //設定地圖的圖資來源
     attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
   }).addTo(mymap);
-  markers = new L.MarkerClusterGroup({//運用此插件達到能夠將多個相近圖標聚集成單一的簇集，減少讀取時的負荷
-    // disableClusteringAtZoom:18  //設置當zoom到達18的時候，所有簇集都會打開
-  }).addTo(mymap); //用插件又增加了一個圖層
+  markers = new L.MarkerClusterGroup({
+    //運用此插件達到能夠將多個相近圖標聚集成單一的簇集，減少讀取時的負荷
+    disableClusteringAtZoom: 18 //設置當zoom到達18的時候，所有簇集都會打開
 
-  greenIcon = new L.Icon({
-    //綠色icon，成人小孩都有的時候
-    iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-green.png',
-    shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
-    iconSize: [25, 41],
-    iconAnchor: [12, 41],
-    popupAnchor: [1, -34],
-    shadowSize: [41, 41]
-  });
-  greyIcon = new L.Icon({
-    //灰色icon，當成人小孩都沒有的時候
-    iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-grey.png',
-    shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
-    iconSize: [25, 41],
-    iconAnchor: [12, 41],
-    popupAnchor: [1, -34],
-    shadowSize: [41, 41]
-  });
-  blueIcon = new L.Icon({
-    //藍色icon，當沒有小孩只剩成人的時候
-    iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-blue.png',
-    shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
-    iconSize: [25, 41],
-    iconAnchor: [12, 41],
-    popupAnchor: [1, -34],
-    shadowSize: [41, 41]
-  });
-  orangeIcon = new L.Icon({
-    //橘色icon，當沒有成人只剩小孩的時候
-    iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-orange.png',
-    shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
-    iconSize: [25, 41],
-    iconAnchor: [12, 41],
-    popupAnchor: [1, -34],
-    shadowSize: [41, 41]
-  });
+  }).addTo(mymap); //用插件又增加了一個圖層
 }
 
 function innerStoresIcon() {
