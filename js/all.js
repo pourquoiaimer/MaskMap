@@ -346,7 +346,6 @@ function moveView(item, zoomNumber) { //主要是在點擊相關地區舌後做�
 function goIcon(e) {  //點擊藥局資料框內的眼睛圖案時會自動跳到該藥局並打開popup
     if (document.body.scrollWidth <= 768) { //當瀏覽的頁面較小時，直接將左側資料欄位收起
         dataList.classList.add('close'); //沒有就加上，等於合起來
-        mapId.classList.add('bigMap'); // 讓地圖加大到填滿畫面
         toggleBtn.classList.add('close'); //沒有就加上，讓圖案向外
     }
     if (!e.target.className.includes('goIcon')) { return };  //確認指向的目標是goIcon
@@ -368,11 +367,9 @@ function togglelist(e) { //切換左側資料欄的開合
     e.preventDefault();
     if (dataList.className.includes('close')) { //檢查有無close，有close代表目前是側面欄位是關閉的的
         dataList.classList.remove('close'); //有就刪去close，等於展開
-        mapId.classList.remove('bigMap'); //讓地圖縮小
         toggleBtn.classList.remove('close'); //有就刪去close，讓圖案向內
     } else { //如果是沒有close代表目前是側面欄位是打開的
         dataList.classList.add('close'); //沒有就加上，等於合起來
-        mapId.classList.add('bigMap'); // 讓地圖加大到填滿畫面
         toggleBtn.classList.add('close'); //沒有就加上，讓圖案向外
     }
 }
