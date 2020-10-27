@@ -16,5 +16,5 @@ https://pourquoiaimer.github.io/MaskMap/
 ## 內容說明
 
 
-## 聲明
-    根據THE F2E 2nd -第十關中 [Wendy的設計稿](https://challenge.thef2e.com/user/2259?schedule=4452#works-4452) 進行製作。
+## 聲明進行
+根據THE F2E 2nd -第十關中 [Wendy的設計稿](https://challenge.thef2e.com/user/2259?schedule=4452#works-4452) 進行製作。
