@@ -25,7 +25,7 @@ https://pourquoiaimer.github.io/MaskMap/
 * 根據口罩是否有剩，會有不同的markers顏色
 
 
-## 聲明進行
+## 聲明
 根據THE F2E 2nd -第十關中 [Wendy的設計稿](https://challenge.thef2e.com/user/2259?schedule=4452#works-4452) 進行製作。
 [藥局資料來源](https://raw.githubusercontent.com/kiang/pharmacies/master/json/points.json)
 [台灣城市區域資料來源](https://github.com/donma/TaiwanAddressCityAreaRoadChineseEnglishJSON/blob/master/CityCountyData.json)
