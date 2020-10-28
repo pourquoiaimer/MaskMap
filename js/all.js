@@ -297,7 +297,7 @@ function judgeDay() { //取得今天星期幾 週日會是0，後面可用於身
 ////*****關於地圖的fuction////
 function buildMap() {
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { //設定地圖的圖資來源
-    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors<br>網頁製作人：<a href="https://github.com/pourquoiaimer/MaskMap">董劭杰</a>｜設計師：<a href="https://challenge.thef2e.com/user/2259?schedule=4452#works-4452">Wendy</a>'
     }).addTo(mymap);
     markers = new L.MarkerClusterGroup({ //運用此插件達到能夠將多個相近圖標聚集成單一的簇集，減少讀取時的負荷
         disableClusteringAtZoom:18  //設置當zoom到達18的時候，所有簇集都會打開
