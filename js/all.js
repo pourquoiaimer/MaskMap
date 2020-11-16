@@ -30,7 +30,7 @@ const mymap = L.map('map', { //設定地圖在哪個標籤呈現
     zoom: 16 //地圖預設大小倍率
 });
 const greenIcon = new L.Icon({ //綠色icon，成人小孩都有的時候
-    iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-green.png',
+    iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-green.png',
     shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
     iconSize: [25, 41],
     iconAnchor: [12, 41],
@@ -38,7 +38,7 @@ const greenIcon = new L.Icon({ //綠色icon，成人小孩都有的時候
     shadowSize: [41, 41]
 });
 const greyIcon = new L.Icon({ //灰色icon，當成人小孩都沒有的時候
-    iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-grey.png',
+    iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-grey.png',
     shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
     iconSize: [25, 41],
     iconAnchor: [12, 41],
@@ -46,7 +46,7 @@ const greyIcon = new L.Icon({ //灰色icon，當成人小孩都沒有的時候
     shadowSize: [41, 41]
 });
 const blueIcon = new L.Icon({ //藍色icon，當沒有小孩只剩成人的時候
-    iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-blue.png',
+    iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-blue.png',
     shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
     iconSize: [25, 41],
     iconAnchor: [12, 41],
@@ -54,7 +54,7 @@ const blueIcon = new L.Icon({ //藍色icon，當沒有小孩只剩成人的時�
     shadowSize: [41, 41]
 });
 const orangeIcon = new L.Icon({ //橘色icon，當沒有成人只剩小孩的時候
-    iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-orange.png',
+    iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-orange.png',
     shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
     iconSize: [25, 41],
     iconAnchor: [12, 41],
@@ -340,7 +340,7 @@ function innerStoresIcon() { //將所有的資料icon加到地圖上
     }
     mymap.addLayer(markers);
 }
-function moveView(item, zoomNumber) { //主要是在點擊相關地區舌後做移動
+function moveView(item, zoomNumber) { //主要是在點擊相關地區的時候做移動
     mymap.setView([item[0].geometry.coordinates[1], item[0].geometry.coordinates[0]], zoomNumber);
 }
 function goIcon(e) {  //點擊藥局資料框內的眼睛圖案時會自動跳到該藥局並打開popup

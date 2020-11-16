@@ -476,7 +476,7 @@ body {
   position: absolute;
   border-radius: 10px;
   right: 5px;
-  bottom: 20px;
+  bottom: 40px;
   background-color: rgba(20, 20, 20, 0.808);
   padding: 10px;
   color: white;
@@ -487,6 +487,7 @@ body {
   -webkit-box-direction: normal;
       -ms-flex-direction: column;
           flex-direction: column;
+  z-index: 5;
 }
 
 @media (max-width: 480px) {
