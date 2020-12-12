@@ -9,7 +9,7 @@ let findWord = /^台/; //用來做地址修正的
 
 //定義關於地圖的資料
 const mymap = L.map('map', { //設定地圖在哪個標籤呈現
-    center: [24.9459283, 121.3766219], //設定起始中心定位點
+    center: [21.9459283, 121.3766219], //設定起始中心定位點
     zoom: 16 //地圖預設大小倍率
 });
 const greenIcon = new L.Icon({ //綠色icon，成人小孩都有的時候
@@ -108,6 +108,7 @@ Promise.all([getCityData, getStoresData]).then(resultData => { //用promise保�
     buildMap();     //建構地圖
     innerStores();  //將藥局資料按照城市和地區載入，默認會是台北市的全部地區
     innerStoresIcon(); //載入所有圖標的部份
+    getPosition();
     document.querySelector('.loading').style.display = "none"; //關閉loading完成圖片
 })
 
@@ -385,3 +386,18 @@ function searchStores() { //搜尋並匹配資料------看是否切換成只包�
             break;
     }
 }
+
+// 定位功能
+function getPosition() {
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(function (position) {
+            let pos = {
+                lat: position.coords.latitude,
+                lng: position.coords.longitude
+            };
+            mymap.setView([pos.lat,pos.lng], 16);
+        });
+    } else {
+        alert("未允許或遭遇錯誤！");
+    };
+};
